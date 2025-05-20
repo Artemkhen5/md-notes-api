@@ -1,5 +1,6 @@
 <?php
 
+use App\Domain\Notes\NoteController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -10,4 +11,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/user', [UserController::class, 'user'])->name('user.info');
     Route::post('/logout', [UserController::class, 'logout'])->name('user.logout');
     Route::post('/refresh-token', [UserController::class, 'refreshToken'])->name('user.refresh-token');
+    /** Notes */
+    Route::apiResource('notes', NoteController::class);
 });
