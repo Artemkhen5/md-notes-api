@@ -23,7 +23,7 @@ class UpdateNoteRequest extends FormRequest
     {
         return [
             'title' => 'sometimes|string|max:255',
-            'content' => 'sometimes|string|max:5000',
+            'content' => 'string|max:5000',
         ];
     }
 }

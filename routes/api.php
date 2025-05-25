@@ -13,4 +13,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/refresh-token', [UserController::class, 'refreshToken'])->name('user.refresh-token');
     /** Notes */
     Route::apiResource('notes', NoteController::class);
+    Route::get('/notes/{note}/render', [NoteController::class, 'render'])->name('notes.render');
 });
