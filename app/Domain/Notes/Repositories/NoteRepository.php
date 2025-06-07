@@ -18,4 +18,14 @@ class NoteRepository
         $note->update($data);
         return $note->fresh();
     }
+
+    public function storeFromFile(array $data, User $user): Note
+    {
+        $content = file_get_contents($data['file']);
+        $note = $user->notes()->create([
+            'title' => $data['title'],
+            'content' => $content,
+        ]);
+        return $note;
+    }
 }

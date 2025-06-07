@@ -4,6 +4,7 @@ namespace App\Domain\Notes;
 
 use App\Domain\Notes\Repositories\NoteRepository;
 use App\Domain\Notes\Requests\SpellCheckRequest;
+use App\Domain\Notes\Requests\StoreFromFileNoteRequest;
 use App\Domain\Notes\Requests\StoreNoteRequest;
 use App\Domain\Notes\Requests\UpdateNoteRequest;
 use App\Domain\Notes\Resources\HtmlNoteResource;
@@ -71,5 +72,12 @@ class NoteController extends Controller
         $language = $request->validated()['language'] ?? 'auto';
         $response = $service->checkGrammar($note->content, $language);
         return response()->json($response);
+    }
+
+    public function file(StoreFromFileNoteRequest $request)
+    {
+        $data = $request->validated();
+        $note = $this->repository->storeFromFile($data, $request->user());
+        return new NoteResource($note);
     }
 }

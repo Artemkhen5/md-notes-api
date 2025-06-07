@@ -15,4 +15,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('notes', NoteController::class);
     Route::get('/notes/{note}/render', [NoteController::class, 'render'])->name('notes.render');
     Route::post('/notes/{note}/spell-check', [NoteController::class, 'spellCheck'])->name('notes.spell-check');
+    Route::post('/notes/file', [NoteController::class, 'file'])->name('notes.file');
 });
