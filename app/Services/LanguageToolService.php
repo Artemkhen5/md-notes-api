@@ -7,26 +7,41 @@ use League\CommonMark\CommonMarkConverter;
 
 class LanguageToolService
 {
-    protected string $apiUrl = 'https://api.languagetool.org/v2/check';
+    protected string $apiUrl = 'https://speller.yandex.net/services/spellservice.json/checkText';
 
-    public function checkGrammar(string $text, string $lang = 'auto'): ?array
+    public function checkGrammar(string $text, string $lang = 'ru'): ?array
     {
         $cleanText = $this->stripMarkdown($text);
+
+        if (empty(trim($cleanText))) {
+            return null;
+        }
+
+        $params = [
+            'text' => $cleanText,
+            'lang' => $lang,
+            'options' => 0
+        ];
+
         try {
-            $response = Http::asForm()->withHeaders([
-                'Accept' => 'application/json',
-            ])->post($this->apiUrl, [
-                'text' => $cleanText,
-                'language' => $lang,
-            ]);
-            return $response->json();
+            $response = Http::get($this->apiUrl, $params);
+
+            if ($response->successful()) {
+                return $response->json();
+            }
+
+            return [
+                'error' => 'API request failed',
+                'status' => $response->status(),
+                'message' => $response->body()
+            ];
+
         } catch (\Exception $e) {
             return [
                 'error' => 'Grammar check failed',
                 'message' => $e->getMessage()
             ];
         }
-
     }
 
     protected function stripMarkdown(string $text): string
