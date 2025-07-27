@@ -9,7 +9,7 @@ class LanguageToolService
 {
     protected string $apiUrl = 'https://speller.yandex.net/services/spellservice.json/checkText';
 
-    public function checkGrammar(string $text, string $lang = 'ru'): ?array
+    public function checkGrammar(string $text): ?array
     {
         $cleanText = $this->stripMarkdown($text);
 
@@ -19,7 +19,7 @@ class LanguageToolService
 
         $params = [
             'text' => $cleanText,
-            'lang' => $lang,
+            'lang' => '',
             'options' => 0
         ];
 

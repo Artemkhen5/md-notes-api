@@ -21,8 +21,6 @@ class SpellCheckRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'language' => 'nullable|string|max:255',
-        ];
+        return [];
     }
 }

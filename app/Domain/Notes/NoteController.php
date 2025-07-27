@@ -69,8 +69,7 @@ class NoteController extends Controller
 
     public function spellCheck(Note $note, SpellCheckRequest $request, LanguageToolService $service)
     {
-        $language = $request->validated()['language'] ?? '';
-        $response = $service->checkGrammar($note->content, $language);
+        $response = $service->checkGrammar($note->content);
         return response()->json($response);
     }
 
